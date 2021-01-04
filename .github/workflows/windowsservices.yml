@@ -51,10 +51,14 @@ jobs:
       with:
         name:  windowsservices
         path: ${{ env.DOWNLOAD_DIRECTORY }}\${{ env.SERVICE_NAME }}
+    - name: List Windows Services ${{ env.SERVICE_NAME }}
+      shell: pwsh
+      run: |
+        Get-Service -Name ${{ env.SERVICE_NAME }}
     - name: Stop Windows Services ${{ env.SERVICE_NAME }}
       shell: pwsh
       run: |
-        Stop-Service -Name ${{ env.SERVICE_NAME }}
+        Stop-Service -Name ${{ env.SERVICE_NAME }} -Force -Confirm
     - name: Copy Windows Services files
       shell: pwsh
       run: |
@@ -62,4 +66,4 @@ jobs:
     - name: Start Windows Services ${{ env.SERVICE_NAME }}
       shell: pwsh
       run: |
-        Start-Service -Name ${{ env.SERVICE_NAME }}
+        Start-Service -Name ${{ env.SERVICE_NAME }} -Force -Confirm
