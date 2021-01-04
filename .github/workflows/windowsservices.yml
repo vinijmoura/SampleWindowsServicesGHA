@@ -8,13 +8,12 @@ on:
 env:
   OUTPUT_DIRECTORY: c:\myapp
   ACTIONS_ALLOW_UNSECURE_COMMANDS: true 
-  
+  SERVICE_NAME: SampleWindowsServicesGHA
+  SERVICE_DIRECTORYNAME: C:\Services\ ${{ env.SERVICE_NAME }}
 jobs:
 
   build:
-
-    runs-on: windows-latest
-    
+    runs-on: self-hosted
     env:
       Solution_Name: 'SampleWindowsServicesGHA.sln'                      
       buildPlatform: 'Any CPU'
@@ -41,3 +40,16 @@ jobs:
       with:
         name: windowsservices
         path: ${{ env.OUTPUT_DIRECTORY }}
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+    - name: Download a Build Artifact
+      uses: actions/download-artifact@v2.0.7
+      with:
+        name:  windowsservices
+    - name: Copy Windows Services files
+      uses: canastro/copy-action@0.0.2
+      with:
+        source: ${{ github.workspace }}
+        target: ${{ env.SERVICE_DIRECTORYNAME }}
