@@ -10,8 +10,8 @@ env:
   ACTIONS_ALLOW_UNSECURE_COMMANDS: true 
   SERVICE_NAME: SampleWindowsServicesGHA
   SERVICE_DIRECTORYNAME: C:\Services\ ${{ env.SERVICE_NAME }}
+  
 jobs:
-
   build:
     runs-on: self-hosted
     env:
