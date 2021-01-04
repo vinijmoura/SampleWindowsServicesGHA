@@ -1,0 +1,42 @@
+name: .Net Full Framework Build and Release to Windows Services
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  OUTPUT_DIRECTORY: c:\myapp
+  
+jobs:
+
+  build:
+
+    runs-on: windows-latest
+    
+    env:
+      Solution_Name: 'SampleWindowsServicesGHA.sln'                      
+      buildPlatform: 'Any CPU'
+      buildConfiguration: 'Release'
+    
+    steps:    
+    - name: Checkout
+      uses: actions/checkout@v2      
+      
+    - name: Setup Nuget.exe
+      uses: warrenbuckley/Setup-Nuget@v1
+      
+    - name: Restore Packages
+      run: nuget restore $env:Solution_Name
+  
+    - name: Setup MSbuild.exe
+      uses: warrenbuckley/Setup-MSBuild@v1
+      
+    - name: Build using MSBuild
+      run: msbuild $env:Solution_Name /p:platform=$env:buildPlatform /p:Configuration=$env:buildConfiguration /p:OutputPath=${{ env.OUTPUT_DIRECTORY }}
+      
+    - name: Publish Artifacts
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: windowsservices
+        path: ${{ env.OUTPUT_DIRECTORY }}
