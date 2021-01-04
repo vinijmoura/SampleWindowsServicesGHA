@@ -11,6 +11,7 @@ env:
   ACTIONS_ALLOW_UNSECURE_COMMANDS: true 
   SERVICE_NAME: SampleWindowsServicesGHA
   SERVICE_DIRECTORYNAME: C:\Services
+  DOWNLOAD_DIRECTORY: C:\ServicesDownload
   
 jobs:
   build:
@@ -49,7 +50,8 @@ jobs:
       uses: actions/download-artifact@v2.0.7
       with:
         name:  windowsservices
+        path: ${{ env.DOWNLOAD_DIRECTORY }}\${{ env.SERVICE_NAME }}
     - name: Copy Windows Services files
       shell: pwsh
       run: |
-        Copy-Item -Path ${{ github.workspace }} -Destination ${{ env.SERVICE_DIRECTORYNAME }}\${{ env.SERVICE_NAME }} -Recurse -Force
+        Copy-Item -Path ${{ env.DOWNLOAD_DIRECTORY }}\${{ env.SERVICE_NAME }} -Destination ${{ env.SERVICE_DIRECTORYNAME }}\${{ env.SERVICE_NAME }} -Recurse -Force
