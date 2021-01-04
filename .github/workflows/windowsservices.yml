@@ -57,7 +57,7 @@ jobs:
         Get-Service -Name ${{ env.SERVICE_NAME }}
     - name: Stop Windows Services ${{ env.SERVICE_NAME }}
       run: |
-        pwsh -command "& {Start-Service ${{ env.SERVICE_NAME}}}" -runas
+        Stop-Service -Name ${{ env.SERVICE_NAME}}
     - name: Copy Windows Services files
       shell: pwsh
       run: |
