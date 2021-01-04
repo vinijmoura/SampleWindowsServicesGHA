@@ -58,7 +58,7 @@ jobs:
     - name: Stop Windows Services ${{ env.SERVICE_NAME }}
       shell: pwsh
       run: |
-        Stop-Service -Name ${{ env.SERVICE_NAME }} -Force -Confirm
+        Stop-Service -Name ${{ env.SERVICE_NAME }}
     - name: Copy Windows Services files
       shell: pwsh
       run: |
@@ -66,4 +66,4 @@ jobs:
     - name: Start Windows Services ${{ env.SERVICE_NAME }}
       shell: pwsh
       run: |
-        Start-Service -Name ${{ env.SERVICE_NAME }} -Force -Confirm
+        Start-Service -Name ${{ env.SERVICE_NAME }}
