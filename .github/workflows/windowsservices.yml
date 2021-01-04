@@ -10,7 +10,7 @@ env:
   OUTPUT_DIRECTORY: c:\myapp
   ACTIONS_ALLOW_UNSECURE_COMMANDS: true 
   SERVICE_NAME: SampleWindowsServicesGHA
-  SERVICE_DIRECTORYNAME: C:\Services\${{ env.SERVICE_NAME }}
+  SERVICE_DIRECTORYNAME: C:\Services
   
 jobs:
   build:
@@ -53,4 +53,4 @@ jobs:
       uses: canastro/copy-action@0.0.2
       with:
         source: ${{ github.workspace }}
-        target: ${{ env.SERVICE_DIRECTORYNAME }}
+        target: ${{ env.SERVICE_DIRECTORYNAME }}\${{ env.SERVICE_NAME }}
