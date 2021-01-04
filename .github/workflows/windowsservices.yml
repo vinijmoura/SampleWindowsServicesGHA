@@ -50,7 +50,6 @@ jobs:
       with:
         name:  windowsservices
     - name: Copy Windows Services files
-      uses: canastro/copy-action@0.0.2
-      with:
-        source: ${{ github.workspace }}
-        target: ${{ env.SERVICE_DIRECTORYNAME }}\${{ env.SERVICE_NAME }}
+      shell: pwsh
+      run: |
+        Copy-Item -Path ${{ github.workspace }} -Destination ${{ env.SERVICE_DIRECTORYNAME }}\${{ env.SERVICE_NAME }} -Recurse -Force
