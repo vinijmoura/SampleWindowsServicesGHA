@@ -51,7 +51,15 @@ jobs:
       with:
         name:  windowsservices
         path: ${{ env.DOWNLOAD_DIRECTORY }}\${{ env.SERVICE_NAME }}
+    - name: Stop Windows Services ${{ env.SERVICE_NAME }}
+      shell: pwsh
+      run: |
+        Stop-Service -Name ${{ env.SERVICE_NAME }}
     - name: Copy Windows Services files
       shell: pwsh
       run: |
         Copy-Item -Path ${{ env.DOWNLOAD_DIRECTORY }}\${{ env.SERVICE_NAME }} -Destination ${{ env.SERVICE_DIRECTORYNAME }}\${{ env.SERVICE_NAME }} -Recurse -Force
+    - name: Start Windows Services ${{ env.SERVICE_NAME }}
+      shell: pwsh
+      run: |
+        Start-Service -Name ${{ env.SERVICE_NAME }}
