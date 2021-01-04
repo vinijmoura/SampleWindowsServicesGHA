@@ -7,6 +7,7 @@ on:
 
 env:
   OUTPUT_DIRECTORY: c:\myapp
+  ACTIONS_ALLOW_UNSECURE_COMMANDS: true 
   
 jobs:
 
