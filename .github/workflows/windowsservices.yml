@@ -56,12 +56,14 @@ jobs:
       run: |
         Get-Service -Name ${{ env.SERVICE_NAME }}
     - name: Stop Windows Services ${{ env.SERVICE_NAME }}
+      shell: pwsh
       run: |
-        $processStop = Start-Process pwsh -ArgumentList "-c Stop-Service -Name ${{ env.SERVICE_NAME}}" -Verb RunAs
+        Start-Process -ArgumentList "-c Stop-Service -Name ${{ env.SERVICE_NAME}}" -Verb RunAs
     - name: Copy Windows Services files
       shell: pwsh
       run: |
         Copy-Item -Path ${{ env.DOWNLOAD_DIRECTORY }}\${{ env.SERVICE_NAME }}\* -Destination ${{ env.SERVICE_DIRECTORYNAME }}\${{ env.SERVICE_NAME }} -Force
     - name: Start Windows Services ${{ env.SERVICE_NAME }}
+      shell: pwsh
       run: |
-        $processStart = Start-Process -Wait pwsh -ArgumentList "-c Start-Service -Name ${{ env.SERVICE_NAME}}" -Verb RunAs
+        Start-Process -ArgumentList "-c Start-Service -Name ${{ env.SERVICE_NAME}}" -Verb RunAs
