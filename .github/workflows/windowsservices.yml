@@ -61,7 +61,7 @@ jobs:
     - name: Copy Windows Services files
       shell: pwsh
       run: |
-        Copy-Item -Path ${{ env.DOWNLOAD_DIRECTORY }}\${{ env.SERVICE_NAME }}\*.* -Destination ${{ env.SERVICE_DIRECTORYNAME }}\${{ env.SERVICE_NAME }}\*.* -Force
+        Copy-Item -Path ${{ env.DOWNLOAD_DIRECTORY }}\${{ env.SERVICE_NAME }}\* -Destination ${{ env.SERVICE_DIRECTORYNAME }}\${{ env.SERVICE_NAME }}\*.* -Force
     - name: Start Windows Services ${{ env.SERVICE_NAME }}
       run: |
         Start-Process pwsh -ArgumentList "-c Start-Service -Name ${{ env.SERVICE_NAME}}" -Verb RunAs
