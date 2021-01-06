@@ -58,7 +58,6 @@ jobs:
     - name: Stop Windows Services ${{ env.SERVICE_NAME }}
       run: |
         $processStop = Start-Process pwsh -ArgumentList "-c Stop-Service -Name ${{ env.SERVICE_NAME}}" -Verb RunAs
-        $processStop.WaitForExit()
     - name: Copy Windows Services files
       shell: pwsh
       run: |
@@ -66,4 +65,3 @@ jobs:
     - name: Start Windows Services ${{ env.SERVICE_NAME }}
       run: |
         $processStart = Start-Process -Wait pwsh -ArgumentList "-c Start-Service -Name ${{ env.SERVICE_NAME}}" -Verb RunAs
-        $processStart.WaitForExit()
