@@ -58,7 +58,7 @@ jobs:
     - name: Stop Windows Services ${{ env.SERVICE_NAME }}
       shell: pwsh
       run: |
-        Start-Process -ArgumentList "-c Stop-Service -Name ${{ env.SERVICE_NAME}}" -Verb RunAs
+        Start-Process pwsh -ArgumentList "-c Stop-Service -Name ${{ env.SERVICE_NAME}}" -Verb RunAs
     - name: Copy Windows Services files
       shell: pwsh
       run: |
@@ -66,4 +66,4 @@ jobs:
     - name: Start Windows Services ${{ env.SERVICE_NAME }}
       shell: pwsh
       run: |
-        Start-Process -ArgumentList "-c Start-Service -Name ${{ env.SERVICE_NAME}}" -Verb RunAs
+        Start-Process pwsh -ArgumentList "-c Start-Service -Name ${{ env.SERVICE_NAME}}" -Verb RunAs
