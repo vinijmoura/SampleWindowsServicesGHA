@@ -59,7 +59,10 @@ jobs:
         Get-Service -Name ${{ env.SERVICE_NAME }}   
     - name: Stop Windows Services ${{ env.SERVICE_NAME }}
       run: |
-        powershell -c "Start-Process pwsh -ArgumentList `"-c `" & {Stop-Service -Name ${{ env.SERVICE_NAME }}}`"`" -Verb RunAs"
+        $code= @"
+        Start-Process pwsh -ArgumentList `'-c `" & {Stop-Service -Name ${{env.SERVICE_NAME}}}`"`' -Verb RunAs
+        "@
+        powershell -c $code
     - name: Verifiyng Stop Process ${{ env.SERVICE_NAME }} 
       shell: pwsh
       run: |
