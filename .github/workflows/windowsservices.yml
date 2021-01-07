@@ -1,5 +1,9 @@
 name: .Net Full Framework Build and Release to Windows Services
 on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
   workflow_dispatch:
 
 env:
@@ -60,8 +64,13 @@ jobs:
     - name: Stop Windows Services ${{ env.SERVICE_NAME }}
       run: |
         Start-Process pwsh -ArgumentList "-c `" & {Stop-Service -Name ${{ env.SERVICE_NAME }}}`"" -Verb RunAs
-        do { Write-Host "Starting service ${{ env.SERVICE_NAME }}" } until ((Get-Service -Name ${{ env.SERVICE_NAME }}).Status -eq "Stopped" )
+        do { Write-Host "Stopping service ${{ env.SERVICE_NAME }}" } until ((Get-Service -Name ${{ env.SERVICE_NAME }}).Status -eq "Stopped" )
     - name: Copy Windows Services files
       shell: pwsh
       run: |
         Copy-Item -Path ${{ env.DOWNLOAD_DIRECTORY }}\${{ env.SERVICE_NAME }}\* -Destination ${{ env.SERVICE_DIRECTORYNAME }}\${{ env.SERVICE_NAME }} -Force
+    - name: Start Windows Services ${{ env.SERVICE_NAME }}
+      shell: pwsh
+      run: |
+        Start-Process pwsh -ArgumentList "-c `" & {Start-Service -Name ${{ env.SERVICE_NAME }}}`"" -Verb RunAs
+        do { Write-Host "Starting service ${{ env.SERVICE_NAME }}" } until ((Get-Service -Name ${{ env.SERVICE_NAME }}).Status -eq "Running" )
