@@ -1,9 +1,5 @@
 name: .Net Full Framework Build and Release to Windows Services
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
   workflow_dispatch:
 
 env:
