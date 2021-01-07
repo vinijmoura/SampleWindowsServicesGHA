@@ -2,6 +2,5 @@ param
 (
   [string] $ServiceName
 )
-        
-  Start-Process pwsh -ArgumentList "-c `" & {Stop-Service -Name $ServiceName}`"" -Verb RunAs   
+  Stop-Service -Name $ServiceName -NoWait
   do { Write-Host "Stopping service $ServiceName" } until ((Get-Service -Name $ServiceName).Status -eq "Stopped" )
