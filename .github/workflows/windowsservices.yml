@@ -59,20 +59,9 @@ jobs:
         Get-Service -Name ${{ env.SERVICE_NAME }}   
     - name: Stop Windows Services ${{ env.SERVICE_NAME }}
       run: |
-        $code= @"
-        Start-Process pwsh -ArgumentList `'-c `" & {Stop-Service -Name ${{env.SERVICE_NAME}}}`"`' -Verb RunAs
-        "@
-        powershell -c $code
-    - name: Verifiyng Stop Process ${{ env.SERVICE_NAME }} 
-      shell: pwsh
-      run: |
-        do { Write-Host "Stopping service ${{ env.SERVICE_NAME }}" } until ((Get-Service -Name ${{ env.SERVICE_NAME }}).Status -eq "Stopped" )
+        Start-Process pwsh -ArgumentList "-c `" & {Stop-Service -Name ${{ env.SERVICE_NAME }}}`"" -Verb RunAs
+        do { Write-Host "Starting service ${{ env.SERVICE_NAME }}" } until ((Get-Service -Name ${{ env.SERVICE_NAME }}).Status -eq "Stopped" )
     - name: Copy Windows Services files
       shell: pwsh
       run: |
         Copy-Item -Path ${{ env.DOWNLOAD_DIRECTORY }}\${{ env.SERVICE_NAME }}\* -Destination ${{ env.SERVICE_DIRECTORYNAME }}\${{ env.SERVICE_NAME }} -Force
-    - name: Start Windows Services ${{ env.SERVICE_NAME }}
-      shell: pwsh
-      run: |
-        Start-Process pwsh -ArgumentList "-c `" & {Start-Service -Name ${{ env.SERVICE_NAME }}}`"" -Verb RunAs
-        do { Write-Host "Starting service ${{ env.SERVICE_NAME }}" } until ((Get-Service -Name ${{ env.SERVICE_NAME }}).Status -eq "Running" )
