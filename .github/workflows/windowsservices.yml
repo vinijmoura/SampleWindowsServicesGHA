@@ -36,11 +36,6 @@ jobs:
     - name: Build using MSBuild
       run: msbuild $env:Solution_Name /p:platform=$env:buildPlatform /p:Configuration=$env:buildConfiguration /p:OutputPath=${{ env.OUTPUT_DIRECTORY }}
     
-    - name: Copy ps1 file
-      shell: pwsh
-      run: |
-        Copy-Item -Path .\StopService.ps1 -Destination ${{ env.OUTPUT_DIRECTORY }}
-
     - name: Publish Artifacts
       uses: actions/upload-artifact@v1.0.0
       with:
