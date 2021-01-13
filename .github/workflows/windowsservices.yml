@@ -8,7 +8,6 @@ on:
 
 env:
   OUTPUT_DIRECTORY: c:\myapp
-  ACTIONS_ALLOW_UNSECURE_COMMANDS: true 
   SERVICE_NAME: SampleWindowsServicesGHA
   SERVICE_DIRECTORYNAME: C:\Services
   DOWNLOAD_DIRECTORY: C:\ServicesDownload
