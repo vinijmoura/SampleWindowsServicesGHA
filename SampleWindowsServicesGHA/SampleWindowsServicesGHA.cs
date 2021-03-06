@@ -31,7 +31,7 @@ namespace SampleWindowsServicesGHA
             }
             catch (Exception)
             {
-                //log anywhereeeeeeee
+                ////log anywhereeeeeeee
             }
         }
 
